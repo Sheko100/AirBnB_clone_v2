@@ -1,50 +1,80 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+"""Module to define FileStorage class"""
+
+import importlib
 import json
+import os
 
 
 class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
+    """Defines a FileStorage class
+
+    Attributes:
+        __file_path (str): path to the JSON file
+        __objects (dict): dictionary of objects
+    """
+
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Returns a dictionary of models currently in storage"""
-        return FileStorage.__objects
+        """Gets the __objects attribute
+
+        Returns:
+            __objects attribute
+        """
+
+        return self.__objects
 
     def new(self, obj):
-        """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        """Adds a new object to the __objects attribute
+
+        Args:
+            obj (object): an instance of the BaseModel class
+        """
+        cls_name = obj.__class__.__name__
+        key = "{}.{}".format(cls_name, obj.id)
+        objects = self.all()
+        objects[key] = obj
 
     def save(self):
-        """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
+        """Serializes __objects to a JSON file with __file_path path
+        """
+
+        objects = self.all()
+        objects_to_save = {}
+
+        for id, obj in objects.items():
+            objects_to_save[id] = obj.to_dict()
+
+        jsons = json.dumps(objects_to_save)
+
+        with open(self.__file_path, mode="w", encoding="utf-8") as file:
+            file.write(jsons)
 
     def reload(self):
-        """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
+        """Deserializes the JSON file into the __objects attribute
+        """
 
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
-        try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
-            pass
+        modules = {"BaseModel": "base_model",
+                   "User": "user",
+                   "State": "state",
+                   "City": "city",
+                   "Amenity": "amenity",
+                   "Place": "place",
+                   "Review": "review"
+                   }
+        file_path = self.__file_path
+        pkg = "models.engine"
+        if os.path.isfile(file_path):
+            with open(file_path, encoding="utf-8") as file:
+                jsons = file.read()
+
+            objects_to_load = json.loads(jsons)
+            for id, dct in objects_to_load.items():
+                cls_name = dct["__class__"]
+                model_path = "..{}".format(modules[cls_name])
+                module = importlib.import_module(model_path, pkg)
+                cls = getattr(module, dct["__class__"])
+                obj = cls(**dct)
+                self.new(obj)

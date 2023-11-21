@@ -1,29 +1,28 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Unittests for the Review class"""
+
+import unittest
 from models.review import Review
 
 
-class test_review(test_basemodel):
-    """ """
+class TestReview(unittest.TestCase):
+    """Tests for the Amenity class"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Review"
-        self.value = Review
+    def test_attributes_updating(self):
+        """Test that assigning a value for the attributes and
+        checks the value against the object attributes values
+        """
 
-    def test_place_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.place_id), str)
+        new_review = Review()
 
-    def test_user_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertEqual(new_review.place_id, "")
+        self.assertEqual(new_review.user_id, "")
+        self.assertEqual(new_review.text, "")
 
-    def test_text(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.text), str)
+        new_review.place_id = "asjkas545aska5"
+        new_review.user_id = "65shjas46ajs"
+        new_review.text = "test text"
+
+        self.assertEqual(new_review.place_id, "asjkas545aska5")
+        self.assertEqual(new_review.user_id, "65shjas46ajs")
+        self.assertEqual(new_review.text, "test text")

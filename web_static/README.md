@@ -1,1 +1,1 @@
-This directory implements webpage design.
+# Project about creating the front-end

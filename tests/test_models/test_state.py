@@ -1,19 +1,22 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Unittests for the State class"""
+
+import unittest
 from models.state import State
 
 
-class test_state(test_basemodel):
-    """ """
+class TestState(unittest.TestCase):
+    """Tests for the State class"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "State"
-        self.value = State
+    def test_attributes_updating(self):
+        """Test that assigning a value for the attributes and
+        checks the value against the object attributes values
+        """
 
-    def test_name3(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+        new_state = State()
+
+        self.assertEqual(new_state.name, "")
+
+        new_state.name = "Kafr al-Sheikh"
+
+        self.assertEqual(new_state.name, "Kafr al-Sheikh")

@@ -1,34 +1,51 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Unittests for the User class
+"""
+
+import unittest
 from models.user import User
 
 
-class test_User(test_basemodel):
-    """ """
+class TestUser(unittest.TestCase):
+    """Tests for the City class"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "User"
-        self.value = User
+    def test_email_updating(self):
+        """Test that assigning a value for the email attribute and
+        checks the value against the object attribute value
+        """
 
-    def test_first_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
+        new_user = User()
 
-    def test_last_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
+        self.assertEqual(new_user.email, "")
+        new_user.email = "test@test.com"
+        self.assertEqual(new_user.email, "test@test.com")
 
-    def test_email(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
+    def test_password_updating(self):
+        """Test that assigning a value for the email attribute and
+        checks the value against the object attribute value
+        """
 
-    def test_password(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        new_user = User()
+        self.assertEqual(new_user.password, "")
+        new_user.password = "testpass"
+        self.assertEqual(new_user.password, "testpass")
+
+    def test_first_name_updating(self):
+        """Test that assigning a value for the email attribute and
+        checks the value against the object attribute value
+        """
+
+        new_user = User()
+        self.assertEqual(new_user.first_name, "")
+        new_user.first_name = "Ali"
+        self.assertEqual(new_user.first_name, "Ali")
+
+    def test_last_name_updating(self):
+        """Test that assigning a value for the email attribute and
+        checks the value against the object attribute value
+        """
+
+        new_user = User()
+        self.assertEqual(new_user.last_name, "")
+        new_user.last_name = "Akram"
+        self.assertEqual(new_user.last_name, "Akram")

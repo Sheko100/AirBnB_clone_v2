@@ -1,24 +1,25 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Unittests for the City class"""
+
+import unittest
 from models.city import City
 
 
-class test_City(test_basemodel):
-    """ """
+class TestCity(unittest.TestCase):
+    """Tests for the City class"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "City"
-        self.value = City
+    def test_attributes_updating(self):
+        """Test that assigning a value for the attributes and
+        checks the value against the object attributes values
+        """
 
-    def test_state_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.state_id), str)
+        new_city = City()
 
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertEqual(new_city.state_id, "")
+        self.assertEqual(new_city.name, "")
+
+        new_city.state_id = "askjd654ashj4a"
+        new_city.name = "Kafr al-Sheikh"
+
+        self.assertEqual(new_city.state_id, "askjd654ashj4a")
+        self.assertEqual(new_city.name, "Kafr al-Sheikh")

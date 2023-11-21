@@ -1,69 +1,52 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""Unittests for the Place class"""
+
+import unittest
 from models.place import Place
 
 
-class test_Place(test_basemodel):
-    """ """
+class TestPlace(unittest.TestCase):
+    """Tests for the Place class"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Place"
-        self.value = Place
+    def test_attributes_updating(self):
+        """Test that assigning a value for the email attribute and
+        checks the value against the object attribute value
+        """
 
-    def test_city_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.city_id), str)
+        new_place = Place()
 
-    def test_user_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertEqual(new_place.city_id, "")
+        self.assertEqual(new_place.user_id, "")
+        self.assertEqual(new_place.name, "")
+        self.assertEqual(new_place.description, "")
+        self.assertEqual(new_place.number_rooms, 0)
+        self.assertEqual(new_place.number_bathrooms, 0)
+        self.assertEqual(new_place.max_guest, 0)
+        self.assertEqual(new_place.price_by_night, 0)
+        self.assertEqual(new_place.latitude, 0.0)
+        self.assertEqual(new_place.longitude, 0.0)
+        self.assertIsInstance(new_place.amenity_ids, list)
 
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+        new_place.city_id = "asd5as25a4"
+        new_place.user_id = "jdk4as664dok"
+        new_place.name = "test place"
+        new_place.description = "test description"
+        new_place.number_rooms = 3
+        new_place.number_bathrooms = 1
+        new_place.max_guest = 2
+        new_place.price_by_night = 50
+        new_place.latitude = 4.54
+        new_place.longitude = 8.67
+        new_place.amenity_ids.append("udyw5qv25a4")
 
-    def test_description(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.description), str)
-
-    def test_number_rooms(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.number_rooms), int)
-
-    def test_number_bathrooms(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.number_bathrooms), int)
-
-    def test_max_guest(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.max_guest), int)
-
-    def test_price_by_night(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.price_by_night), int)
-
-    def test_latitude(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), float)
-
-    def test_longitude(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), float)
-
-    def test_amenity_ids(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.amenity_ids), list)
+        self.assertEqual(new_place.city_id, "asd5as25a4")
+        self.assertEqual(new_place.user_id, "jdk4as664dok")
+        self.assertEqual(new_place.name, "test place")
+        self.assertEqual(new_place.description, "test description")
+        self.assertEqual(new_place.number_rooms, 3)
+        self.assertEqual(new_place.number_bathrooms, 1)
+        self.assertEqual(new_place.max_guest, 2)
+        self.assertEqual(new_place.price_by_night, 50)
+        self.assertEqual(new_place.latitude, 4.54)
+        self.assertEqual(new_place.longitude, 8.67)
+        self.assertEqual(new_place.amenity_ids[0], "udyw5qv25a4")
