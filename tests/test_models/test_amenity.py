@@ -1,23 +1,19 @@
 #!/usr/bin/python3
-"""Unittests for the Amenity class"""
-
-
-import unittest
+""" """
+from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
 
 
-class TestAmenity(unittest.TestCase):
-    """Tests for the Amenity class"""
+class test_Amenity(test_basemodel):
+    """ """
 
-    def test_attributes_updating(self):
-        """Test that assigning a value for the attributes and
-        checks the value against the object attributes values
-        """
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = "Amenity"
+        self.value = Amenity
 
-        new_amenity = Amenity()
-
-        self.assertEqual(new_amenity.name, "")
-
-        new_amenity.name = "test amenity name"
-
-        self.assertEqual(new_amenity.name, "test amenity name")
+    def test_name2(self):
+        """ """
+        new = self.value()
+        self.assertEqual(type(new.name), str)
