@@ -6,7 +6,7 @@ mkdir -p /data/web_static/releases/test/
 mkdir -p /data/web_static/shared/
 html="<html>\n\t<head>\n\t</head>\n\t<body>\n\t\tHello Earth!\n\t</body>
 \n<html>"
-echo -e $html > /data/web_static/releases/test/index.html
+echo -e "$html" > /data/web_static/releases/test/index.html
 test -d /data/web_static/current && rm /data/web_static/current
 ln -s /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
