@@ -2,6 +2,7 @@
 """Fabric file to archive the web_static directory
 """
 from fabric.operations import local
+from fabric.utils import puts
 import datetime
 import os
 
