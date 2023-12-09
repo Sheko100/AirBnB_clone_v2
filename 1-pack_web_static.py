@@ -16,7 +16,8 @@ def do_pack():
     h = d.strftime("%H")
     mi = d.strftime("%M")
     sec = d.strftime("%S")
-    output_name = "web_static_{}{}{}{}{}{}.tgz".format(y, m, da, h, mi, d.sec)
+
+    output_name = "web_static_{}{}{}{}{}{}.tgz".format(y, m, da, h, mi, sec)
     path = "versions/{}".format(output_name)
 
     if not os.path.isdir("./versions"):
