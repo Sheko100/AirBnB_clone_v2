@@ -18,12 +18,15 @@ def do_pack():
     sec = d.second
 
     output_name = "web_static_{}{}{}{}{}{}.tgz".format(y, m, da, h, mi, d.sec)
+    path = "versions/{}".format(output_name)
 
     if not os.path.isdir("./versions"):
         os.mkdir("./versions")
 
+    puts("Packing web_static to {}".format(path))
     try:
-        local("tar -cvzf versions/{} web_static".format(output_name))
-        return "versions/{}".format(output_name)
+        local("tar -cvzf {} web_static".format(path))
+        puts("web_static packed: {} -> {}Bytes".format(path, size))
+        return path
     except err:
         return None
