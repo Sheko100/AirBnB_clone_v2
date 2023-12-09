@@ -3,6 +3,7 @@
 """
 from fabric.operations import local
 import datetime
+import os
 
 
 def do_pack():
@@ -18,7 +19,8 @@ def do_pack():
 
     output_name = "web_static_{}{}{}{}{}{}.tgz".format(y, m, da, h, mi, d.sec)
 
-    local("test -d versions || mkdir versions")
+    if not os.path.isdir("./versions"):
+        os.mkdir("./versions")
 
     try:
         local("tar -cvzf versions/{} web_static".format(output_name))
