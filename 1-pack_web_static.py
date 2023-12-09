@@ -25,8 +25,8 @@ def do_pack():
 
     puts("Packing web_static to {}".format(path))
     try:
-        local("tar -cvzf {} web_static".format(path))
-        puts("web_static packed: {} -> {}Bytes".format(path, size))
-        return path
+        if local("tar -cvzf {} web_static".format(path)).succeeded:
+            puts("web_static packed: {} -> {}Bytes".format(path, size))
+            return path
     except err:
         return None
