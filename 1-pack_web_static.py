@@ -10,13 +10,12 @@ def do_pack():
     """generates a tgz archive from the contents of the web_static directory
     """
     d = datetime.datetime.now()
-    y = d.year
+    y = d.strftime("%Y")
     m = d.strftime("%m")
     da = d.strftime("%d")
-    h = d.hour
-    mi = d.minute
-    sec = d.second
-
+    h = d.strftime("%H")
+    mi = d.strftime("%M")
+    sec = d.strftime("%S")
     output_name = "web_static_{}{}{}{}{}{}.tgz".format(y, m, da, h, mi, d.sec)
     path = "versions/{}".format(output_name)
 
