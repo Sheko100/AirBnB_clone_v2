@@ -13,6 +13,6 @@ chown -R ubuntu:ubuntu /data/
 cfg_path="/etc/nginx/sites-enabled/default"
 static_root="\troot /data/web_static/current/;"
 sed -i "s|^\troot.*|$static_root|" "$cfg_path"
-hbnb_alias="\t\tlocation /hbnb_static/ {\n\t\t\talias /data/web_static/current/;\n\t\t}"
-grep -q "location /hbnb_static/" "$cfg_path" || sed -i "s|^\tlocation / {|\tlocation / {\n\n$hbnb_alias|" "$cfg_path"
+hbnb_alias="\t\tlocation /hbnb_static {\n\t\t\talias /data/web_static/current/;\n\t\t}"
+grep -q "location /hbnb_static" "$cfg_path" || sed -i "s|^\tlocation / {|\tlocation / {\n\n$hbnb_alias|" "$cfg_path"
 service nginx reload
