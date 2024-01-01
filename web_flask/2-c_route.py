@@ -24,9 +24,9 @@ def hbnb():
 
 @app.route('/c/<text>', strict_slashes=False)
 def c(text):
-    """ Generates text appended to 'c ' on the '/c/<text>' route
+    """ Generates text appended to 'C ' on the '/c/<text>' route
     """
-    return f"c {escape(text.replace('_', ' '))}"
+    return f"C {escape(text.replace('_', ' '))}"
 
 
 if __name__ == "__main__":
