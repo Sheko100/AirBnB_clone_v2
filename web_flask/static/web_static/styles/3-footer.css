@@ -1,0 +1,14 @@
+footer {
+	height: 60px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	border-top: solid 1px #CCCCCC;
+	background-color: #FFFFFF;
+}
+footer span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
