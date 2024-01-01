@@ -3,6 +3,7 @@
 """
 
 from flask import Flask
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ def hbnb():
 def c(text):
     """ Generates text appended to 'c ' on the '/c/<text>' route
     """
-    return f"c {text.replace('_', ' ')}"
+    return f"c {escape(text.replace('_', ' '))}"
 
 
 if __name__ == "__main__":
