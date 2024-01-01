@@ -78,3 +78,8 @@ class FileStorage:
                 cls = getattr(module, dct["__class__"])
                 obj = cls(**dct)
                 self.new(obj)
+
+    def close(self):
+        """Calls the reload method
+        """
+        self.reload()
