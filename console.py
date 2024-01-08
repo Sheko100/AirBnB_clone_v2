@@ -65,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
             value = pair[1]
             is_string = re.search(r'^"\w+(([@\-.]\w+)|(\\\"\w*))*"$', value)
             is_float = re.search(r'^-?\d+\.\d+$', value)
-            is_num = re.search(r'^\d+$', value)
+            is_num = re.search(r'^-?\d+$', value)
 
             if is_string:
                 value = value.replace("_", " ")
