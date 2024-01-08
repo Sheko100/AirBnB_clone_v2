@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
             pair = arg.split("=")
             value = pair[1]
-            is_string = re.search(r'^"\w+((@\w+\.\w+)|(\\\"\w*))*"$', value)
+            is_string = re.search(r'^"\w+(([@\-.]\w+)|(\\\"\w*))*"$', value)
             is_float = re.search(r'^-?\d+\.\d+$', value)
             is_num = re.search(r'^\d+$', value)
 
@@ -104,6 +104,7 @@ class HBNBCommand(cmd.Cmd):
                 model_args = self.make_args(arg_list[1:])
                 model = cls(model_args)
             else:
+                pass
                 model = cls()
             model.save()
             print(model.id)
