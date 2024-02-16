@@ -40,10 +40,10 @@ Extending the AirBnB clone by adding the option to use SQL database as a storage
 Just run ```./console.py``` on your command line, then you will enter the interactive mode
 
 ## How to use it
-These are the command you can use:
+These are the commands you can use:
 
  - create: creates a new instance
- E.G: ```Create User```
+ E.G: ```create User```
  
  - all: prints all the objects created
  - show: prints a particular object
