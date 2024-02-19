@@ -3,6 +3,7 @@
 
 import cmd
 import importlib
+import re
 from models import storage
 
 
@@ -47,6 +48,40 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+    def make_args(self, arg_list):
+        """Converts a list of key worded variables to
+        a dictionary contains a key and its value
+
+        Args:
+            arg_list (list): a list of key worded variables
+        """
+
+        dct = {}
+
+        for arg in arg_list:
+            if "=" not in arg:
+                continue
+            pair = arg.split("=")
+            value = pair[1]
+            is_string = re.search(r'^"\w+(([@\-.,]\w+)|(\\\"\w*))*"$', value)
+            is_float = re.search(r'^-?\d+\.\d+$', value)
+            is_num = re.search(r'^-?\d+$', value)
+
+            if is_string:
+                value = value.replace("_", " ")
+                value = value.strip('"')
+                dct[pair[0]] = value
+            elif is_float:
+                value = float(value)
+            elif is_num:
+                value = int(value)
+            else:
+                continue
+
+            dct[pair[0]] = value
+
+        return dct
+
     def do_create(self, arg_str):
         """Creates a new instance of the BaseModel
 
@@ -54,16 +89,23 @@ class HBNBCommand(cmd.Cmd):
             arg_str (str): the remaining of the line after the command
         """
         modules = self.modules
+        arg_list = arg_str.split()
+        arg_count = len(arg_list)
 
         if len(arg_str) < 1:
             print("** class name missing **")
-        elif arg_str not in modules:
+        elif arg_list[0] not in modules:
             print("** class doesn't exist **")
         else:
-            model_path = "models.{}".format(modules[arg_str])
+            model_path = "models.{}".format(modules[arg_list[0]])
             module = importlib.import_module(model_path)
-            cls = getattr(module, arg_str)
-            model = cls()
+            cls = getattr(module, arg_list[0])
+            if arg_count > 1:
+                model_args = self.make_args(arg_list[1:])
+                model = cls(model_args)
+            else:
+                pass
+                model = cls()
             model.save()
             print(model.id)
 
