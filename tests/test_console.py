@@ -2,8 +2,8 @@
 """Unittest for the console commands
 """
 
-from console import HBNBCommand
 import os
+from console import HBNBCommand
 import unittest
 
 
