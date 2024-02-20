@@ -21,6 +21,12 @@ class City(BaseModel):
             args: positional arguments
             kwargs: named arguments
         """
+        if len(args) > 0:
+            args_dct = args[0]
+            if "name" in args_dct:
+                self.name = args_dct["name"]
+            if "state_id" in args_dct:
+                self.state_id = args_dct["state_id"]
         if len(kwargs) < 1:
             super().__init__()
         else:

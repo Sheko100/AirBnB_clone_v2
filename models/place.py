@@ -39,6 +39,12 @@ class Place(BaseModel):
             args: positional arguments
             kwargs: named arguments
         """
+        if len(args) > 0:
+            args_dct = args[0]
+            for key in args_dct:
+                atrbs = self.__dir__()
+                if key in atrbs:
+                    setattr(self, key, args_dct[key])
         if len(kwargs) < 1:
             super().__init__()
         else:

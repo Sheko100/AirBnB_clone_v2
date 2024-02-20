@@ -19,6 +19,10 @@ class State(BaseModel):
             args: positional arguments
             kwargs: named arguments
         """
+        if len(args) > 0:
+            args_dct = args[0]
+            if "name" in args_dct:
+                self.name = args_dct["name"]
         if len(kwargs) < 1:
             super().__init__()
         else:
