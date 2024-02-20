@@ -17,26 +17,14 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self, cls=None):
+    def all(self):
         """Gets the __objects attribute
 
-        Args:
-            cls: class to filter the objects
-
         Returns:
-            a dictionary of objects
+            __objects attribute
         """
 
-        objs = self.__objects
-
-        if cls:
-            cls_name = cls.__name__
-            cls_objs = {
-                    k: obj for k, obj in objs.items() if k.startswith(cls_name)
-                    }
-            return cls_objs
-
-        return objs
+        return self.__objects
 
     def new(self, obj):
         """Adds a new object to the __objects attribute
@@ -90,14 +78,3 @@ class FileStorage:
                 cls = getattr(module, dct["__class__"])
                 obj = cls(**dct)
                 self.new(obj)
-
-    def delete(self, obj=None):
-        """Delets an object from the _objects
-        """
-
-        objs = self.all()
-        if obj is not None:
-            cls_name = obj.__class__.__name__
-            key = "{}.{}".format(cls_name, obj.id)
-            if key in objs:
-                del objs[key]
