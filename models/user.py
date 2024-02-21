@@ -23,8 +23,14 @@ class User(BaseModel, Base):
     first_name = Column("first_name", String(128), nullable=True)
     last_name = Column("last_name", String(128), nullable=True)
 
+    # relationships
     places = relationship(
             "Place",
+            backref="user",
+            cascade="all, delete, delete-orphan")
+
+    reviews = relationship(
+            "Review",
             backref="user",
             cascade="all, delete, delete-orphan")
 

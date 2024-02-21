@@ -3,6 +3,8 @@
 """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship
+import models
 
 
 class Place(BaseModel, Base):
@@ -36,6 +38,12 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
+    #relationships
+    reviews = relationship(
+            "Place",
+            backref="place",
+            cascade="all, delete, delete-orphan")
+
 
     def __init__(self, *args, **kwargs):
         """Initializes the instance
@@ -54,3 +62,16 @@ class Place(BaseModel, Base):
             super().__init__()
         else:
             super().__init__(**kwargs)
+
+    @property
+    def reviews(self):
+        """ Getter method for reviews. It returns a list of Review instaces
+        with place_id equals to the current Place.id """
+
+        reviews = models.storage.all(Review).values()
+
+        # for each review in reviews, return reviews that belong to the 
+        # current Place instance 
+        reviews_list = [ review for review in reviews if self.id == review.place_id ]
+
+        return reviews_list
