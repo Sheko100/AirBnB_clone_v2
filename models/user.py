@@ -2,22 +2,25 @@
 """Module to define the User class"""
 
 from models.base_model import BaseModel
+from sqlalchemy import Column, String
 
 
 class User(BaseModel):
     """Class that defines a User
 
-    Args:
-    email (str): the user email
-    password (str): the user password
-    first_name (str): the user first name
-    last_name (str): the user last name
+    Attributes:
+        email (str): the user email
+        password (str): the user password
+        first_name (str): the user first name
+        last_name (str): the user last name
     """
 
-    email = ""
-    password = ""
-    first_name = ""
-    last_name = ""
+    __tablename__ = "users"
+
+    email = Column("email", String(128), nullable=False)
+    password = Column("password", String(128), nullable=False)
+    first_name = Column("first_name", String(128), nullable=True)
+    last_name = Column("last_name", String(128), nullable=True)
 
     def __init__(self, *args, **kwargs):
         """Initializes the instance
