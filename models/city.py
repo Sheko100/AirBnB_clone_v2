@@ -1,18 +1,27 @@
 #!/usr/bin/python3
 """Module to define the City class
 """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String, ForeignKey
 
 
-class City(BaseModel):
+class City(BaseModel, Base):
     """Class that defines a city
 
-    Args:
+    Attributes:
+        __tablename__ (str): the table name
         state_id (str): the id of the State instance
         name (str): the city name
     """
-    state_id = ""
-    name = ""
+    __tablename__ = "cities"
+
+    state_id = Column(
+            "state_id",
+            String(60),
+            ForeignKey("states.id"),
+            nullable=False
+            )
+    name = Column("name", String(128), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Initializes the instance
