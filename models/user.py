@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Module to define the User class"""
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """Class that defines a User
 
     Attributes:
