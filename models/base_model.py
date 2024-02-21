@@ -3,12 +3,35 @@
 
 from datetime import datetime
 from models import storage
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime
 from uuid import uuid4
+
+Base = declarative_base()
 
 
 class BaseModel:
     """A class to define a base model
+
+    Attributes:
+        id: object id
+        created_at: the date and time of object creation
+        updated_at: the data and time of object updating
     """
+
+    id = Column("id", String(60), primary_key=True, nullable=False)
+    created_at = Column(
+            "created_at",
+            DateTime(),
+            nullable=False,
+            default=datetime.utcnow()
+            )
+    updated_at = Column(
+            "updated_at",
+            DateTime(),
+            nullable=False,
+            default=datetime.utcnow()
+            )
 
     def __init__(self, *args, **kwargs):
         """initializes the instance of the BaseModel
@@ -20,14 +43,14 @@ class BaseModel:
         if len(kwargs) > 0:
             self.__dict__ = kwargs
             dct = self.__dict__
-            del dct["__class__"]
+            if "__class__" in dct:
+                del dct["__class__"]
             dct["created_at"] = datetime.fromisoformat(dct["created_at"])
             dct["updated_at"] = datetime.fromisoformat(dct["updated_at"])
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
 
     def __str__(self):
         cls_name = self.__class__.__name__
@@ -39,6 +62,7 @@ class BaseModel:
         """
 
         self.updated_at = datetime.now()
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
@@ -49,5 +73,12 @@ class BaseModel:
         dct["__class__"] = self.__class__.__name__
         dct["created_at"] = dct["created_at"].isoformat()
         dct["updated_at"] = dct["updated_at"].isoformat()
+        if '_sa_instance_state' in dct:
+            del dct['_sa_instance_state']
 
         return dct
+
+    def delete(self):
+        """Deletes this object from the storage
+        """
+        storage.delete(self)
