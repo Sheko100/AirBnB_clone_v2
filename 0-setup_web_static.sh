@@ -10,6 +10,6 @@ test -d /data/web_static/current && rm /data/web_static/current
 ln -s /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 cfg_path="/etc/nginx/sites-enabled/default"
-hbnb_alias="hbnb_static {\n\t\t\talias /data/web_static/current/;\n\t\t}"
+hbnb_alias="hbnb_static {\n\t\t\talias /data/web_static/current;\n\t\t}"
 grep -q "location /hbnb_static" "$cfg_path" || sed -i -r "s|^(\tlocation /).*|&\n\n\t\1$hbnb_alias|" "$cfg_path"
-service nginx reload
+service nginx restart
