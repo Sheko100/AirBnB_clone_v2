@@ -2,7 +2,7 @@
 """Module to clean out-of-date archives
 """
 from fabric.api import env, local, run
-env.hosts = ["34.232.68.147", "100.26.230.98"]
+env.hosts = ["54.236.48.120", "100.25.146.107"]
 env.user = "ubuntu"
 
 
