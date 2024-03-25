@@ -110,4 +110,3 @@ class DBStorage:
         """
         session = self.__session
         session.remove()
-
