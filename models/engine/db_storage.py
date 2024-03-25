@@ -46,7 +46,8 @@ class DBStorage:
 
         modules = ["user", "state", "city", "amenity", "place", "review"]
         dct = {}
-        session = self.__session
+        Session = self.__session
+        session = Session()
         pkg = "models.engine"
 
         if cls:
@@ -72,20 +73,23 @@ class DBStorage:
     def new(self, obj):
         """Adds the object obj to the current database session
         """
-        session = self.__session
+        Session = self.__session
+        session = Session()
         session.add(obj)
 
     def save(self):
         """Commits all the changes to the current database session
         """
-        session = self.__session
+        Session = self.__session
+        session = Session()
         session.commit()
 
     def delete(self, obj=None):
         """deletes from the current database session obj if not None
         """
         if obj:
-            session = self.__session
+            Session = self.__session
+            session = Session()
             session.delete(obj)
 
     def reload(self):
@@ -102,8 +106,9 @@ class DBStorage:
 
         Base.metadata.create_all(self.__engine)
         session_fac = sessionmaker(self.__engine, expire_on_commit=False)
-        session = scoped_session(session_fac)
-        self.__session = session()
+        Session = scoped_session(session_fac)
+        #self.__session = session()
+        self.__session = Session
 
     def close(self):
         """Closes the database sessions
