@@ -60,7 +60,7 @@ class BaseModel:
             self.updated_at = datetime.now()
         """
         if 'id' in kwargs:
-            dir_dct  = self.__dir__()
+            dir_dct = self.__dir__()
             dct = self.__dict__
             for key in kwargs:
                 if key in dir_dct and key != "__class__":
@@ -71,7 +71,6 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-
 
     def __str__(self):
         cls_name = self.__class__.__name__

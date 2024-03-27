@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 import models
 
 
-# an instance of SQLAlchemy Table to create a Many-To-Many relationship between Place and Amenity tables
+# a Many-To-Many relationship between Place and Amenity tables
 places_amenities = Table(
         "place_amenity",
         Base.metadata,
@@ -57,7 +57,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
-    #relationships
+    # relationships
     reviews = relationship(
             "Place",
             backref="place",
@@ -95,21 +95,24 @@ class Place(BaseModel, Base):
 
         reviews = models.storage.all(Review).values()
 
-        # for each review in reviews, return reviews that belong to the 
-        # current Place instance 
-        reviews_list = [ review for review in reviews if self.id == review.place_id ]
+        # for each review in reviews, return reviews that belong to the
+        # current Place instance
+        reviews_list = [
+                review for review in reviews if self.id == review.place_id
+                ]
 
         return reviews_list
 
     @property
     def amenities(self):
-        """ Getter attribute that returns a list of Amenity instances based on the
-        attribute amenity_ids, that contains all amenities linked to a Place """
+        """ returns a list of Amenity instances based on the
+        attribute amenity_ids, that contains all amenities linked to a Place
+        """
 
         amenities = models.storage.all(Amenity).values()
 
-        amenities_list = [ 
-                amenity for amenity in amenities 
+        amenities_list = [
+                amenity for amenity in amenities
                 if self.id in self.amenity_ids
                 ]
 
@@ -117,10 +120,9 @@ class Place(BaseModel, Base):
 
     @amenities.setter
     def amenities(self, amenity_obj):
-        """ Setter attribute that handles append method for adding an amenity to the
-        amenity_ids list.
+        """ handles append method for adding an amenity to
+        the amenity_ids list.
         Should only accept Amenity object, otherwise do nothing """
 
         if isinstance(amenity_obj, Amenity):
             self.amenity_ids.append(amenity_obj.id)
-
