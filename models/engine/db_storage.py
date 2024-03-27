@@ -51,9 +51,10 @@ class DBStorage:
         pkg = "models.engine"
 
         if cls:
-            model_path = "..{}".format(cls.lower())
+            model_name = cls.__name__
+            model_path = "..{}".format(model_name.lower())
             module = importlib.import_module(model_path, pkg)
-            model = getattr(module, cls.capitalize())
+            model = getattr(module, model_name.capitalize())
             for instance in session.query(model).all():
                 key = "{}.{}".format(cls, instance.id)
                 dct[key] = instance

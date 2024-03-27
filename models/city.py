@@ -2,6 +2,7 @@
 """Module to define the City class
 """
 from models.base_model import BaseModel, Base
+from models.place import Place
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -43,7 +44,9 @@ class City(BaseModel, Base):
                 self.name = args_dct["name"]
             if "state_id" in args_dct:
                 self.state_id = args_dct["state_id"]
-        if len(kwargs) < 1:
-            super().__init__()
-        else:
-            super().__init__(**kwargs)
+
+        dir_dct = self.__dir__()
+        for key in kwargs:
+            if key in dir_dct:
+                self.__dict__[key] = kwargs[key]
+        super().__init__(**kwargs)

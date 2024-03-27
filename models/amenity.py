@@ -28,7 +28,8 @@ class Amenity(BaseModel, Base):
             if "name" in args_dct:
                 self.name = args_dct["name"]
 
-        if len(kwargs) < 1:
-            super().__init__()
-        else:
-            super().__init__(**kwargs)
+        dir_dct = self.__dir__()
+        for key in kwargs:
+            if key in dir_dct:
+                self.__dict__[key] = kwargs[key]
+        super().__init__(**kwargs)

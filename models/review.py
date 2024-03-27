@@ -31,7 +31,9 @@ class Review(BaseModel, Base):
                 atrbs = self.__dir__()
                 if key in atrbs:
                     setattr(self, key, args_dct[key])
-        if len(kwargs) < 1:
-            super().__init__()
-        else:
+
+        dir_dct = self.__dir__()
+        for key in kwargs:
+            if key in dir_dct:
+                self.__dict__[key] = kwargs[key]
             super().__init__(**kwargs)

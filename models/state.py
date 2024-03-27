@@ -26,14 +26,18 @@ class State(BaseModel, Base):
             args: positional arguments
             kwargs: named arguments
         """
-        if len(args) > 0:
-            args_dct = args[0]
-            if "name" in args_dct:
-                self.name = args_dct["name"]
-        if len(kwargs) < 1:
-            super().__init__()
-        else:
-            super().__init__(**kwargs)
+        #if len(args) > 0:
+            #args_dct = args[0]
+            #if "name" in args_dct:
+            #    self.name = args_dct["name"]
+        #if len(kwargs) < 1:
+        #    super().__init__()
+        #else:
+        dir_dct = self.__dir__()
+        for key in kwargs:
+            if key in dir_dct:
+                self.__dict__[key] = kwargs[key]
+        super().__init__(**kwargs)
 
     @property
     def cities(self):
@@ -41,7 +45,8 @@ class State(BaseModel, Base):
         associtated with this state
         """
         all_cities = storage.all(City)
+        city_objs = all_cities.values()
         self.__cities = [
-                city for city in all_cities if city.state_id == self.id
+                city for city in city_objs if city.state_id == self.id
                 ]
         return self.__cities

@@ -40,17 +40,38 @@ class BaseModel:
             args: positional arguments
             kwargs: named arguments
         """
+
+        """
         if len(kwargs) > 0:
-            self.__dict__ = kwargs
+            dir_dct  = self.__dir__()
+            for key in kwargs:
+                if key in dir_dct:
+                    self.__dict__[key] = kwargs[key]
+            #self.__dict__ = kwargs
             dct = self.__dict__
             if "__class__" in dct:
                 del dct["__class__"]
+            print(dct)
             dct["created_at"] = datetime.fromisoformat(dct["created_at"])
             dct["updated_at"] = datetime.fromisoformat(dct["updated_at"])
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+        """
+        if 'id' in kwargs:
+            dir_dct  = self.__dir__()
+            dct = self.__dict__
+            for key in kwargs:
+                if key in dir_dct and key != "__class__":
+                    self.__dict__[key] = kwargs[key]
+            dct["created_at"] = datetime.fromisoformat(dct["created_at"])
+            dct["updated_at"] = datetime.fromisoformat(dct["updated_at"])
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+
 
     def __str__(self):
         cls_name = self.__class__.__name__
