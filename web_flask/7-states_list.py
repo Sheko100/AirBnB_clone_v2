@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route('/states_list', strict_slashes=False)
-def states():
+def states_list():
     """Generates a list of the states on the '/states_list' route
     """
     states_dct = storage.all(State)
