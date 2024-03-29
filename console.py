@@ -102,9 +102,8 @@ class HBNBCommand(cmd.Cmd):
             cls = getattr(module, arg_list[0])
             if arg_count > 1:
                 model_args = self.make_args(arg_list[1:])
-                model = cls(model_args)
+                model = cls(**model_args)
             else:
-                pass
                 model = cls()
             model.save()
             print(model.id)
@@ -165,8 +164,7 @@ class HBNBCommand(cmd.Cmd):
             arg_str (str): the remaining of the line after the command
         """
         args = args_str.split()
-        objects_val = self.objects.values()
-
+        objects_val = list(self.objects.values())
         if len(args) > 0:
             if args[0] not in self.modules:
                 print("** class doesn't exist **")
@@ -178,7 +176,7 @@ class HBNBCommand(cmd.Cmd):
                         objects_list.append(str(obj))
                 print(objects_list)
         else:
-            objects_list = [str(object) for object in self.objects.values()]
+            objects_list = [str(object) for object in objects_val]
             print(objects_list)
 
     def do_update(self, args_str):

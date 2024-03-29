@@ -26,6 +26,7 @@ class State(BaseModel, Base):
             args: positional arguments
             kwargs: named arguments
         """
+        print(args)
         dir_dct = self.__dir__()
         for key in kwargs:
             if key in dir_dct:
@@ -34,8 +35,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        """obj: an object that represents a table of cities
-        associtated with this state
+        """gets the cities for the file storage
         """
         all_cities = storage.all(City)
         city_objs = all_cities.values()
