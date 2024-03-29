@@ -4,7 +4,9 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-import models
+from models.amenity import Amenity
+from models.review import Review
+from models import storage
 
 
 # a Many-To-Many relationship between Place and Amenity tables
@@ -93,7 +95,7 @@ class Place(BaseModel, Base):
         """ Getter method for reviews. It returns a list of Review instaces
         with place_id equals to the current Place.id """
 
-        reviews = models.storage.all(Review).values()
+        reviews = storage.all(Review).values()
 
         # for each review in reviews, return reviews that belong to the
         # current Place instance
@@ -109,7 +111,7 @@ class Place(BaseModel, Base):
         attribute amenity_ids, that contains all amenities linked to a Place
         """
 
-        amenities = models.storage.all(Amenity).values()
+        amenities = storage.all(Amenity).values()
 
         amenities_list = [
                 amenity for amenity in amenities

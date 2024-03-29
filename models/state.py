@@ -26,7 +26,6 @@ class State(BaseModel, Base):
             args: positional arguments
             kwargs: named arguments
         """
-        print(args)
         dir_dct = self.__dir__()
         for key in kwargs:
             if key in dir_dct:
